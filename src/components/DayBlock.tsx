@@ -10,7 +10,7 @@ interface HourBlockProps {
   index: number;
 }
 
-const DayBlock: React.FC<DayBlockProps> = ({ date, index }) => {
+const DayBlock: React.FC<DayBlockProps> = () => {
   const hours = [];
   for (let i = 8; i <= 20; i++) {
     hours.push(i);
@@ -26,7 +26,7 @@ const DayBlock: React.FC<DayBlockProps> = ({ date, index }) => {
   );
 };
 
-const HourBlock: React.FC<HourBlockProps> = ({ hour, index }) => {
+const HourBlock: React.FC<HourBlockProps> = () => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
   const handleClick = () => {
