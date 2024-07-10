@@ -1,47 +1,68 @@
-import React from "react";
+import React, { useRef } from "react";
+import { Event } from "../interface/Event";
 
 interface PopupI {
   date: Date;
   hour: number;
   handleClose: (close: boolean) => void;
+  handleConfirm: (Event: Event) => void;
 }
 
 const Popup: React.FC<PopupI> = (props) => {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLInputElement>(null);
+
   const formatDate = (date: Date) => {
-    const formattedDate = date.toLocaleDateString("fr-FR", {
+    return date.toLocaleDateString("fr-FR", {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric",
     });
-    return formattedDate;
   };
 
   const formatTime = (hour: number) => {
-    return `${hour.toString().padStart(2, "0")}:00`; // Convert to HH:MM format
+    return `${hour.toString().padStart(2, "0")}:00`;
   };
 
   const handleCancel = () => {
     props.handleClose(false);
   };
 
-  const handleConfirm = () => {};
+  const handleConfirm = () => {
+    const title = titleRef.current?.value;
+    const description = descriptionRef.current?.value;
+
+    if (title !== undefined && description !== undefined) {
+      const event: Event = {
+        date: props.date,
+        hour: props.hour,
+        title: title,
+        description: description,
+      };
+      props.handleConfirm(event);
+
+      localStorage.setItem("event", JSON.stringify(event));
+    }
+
+    props.handleClose(false);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="w-full max-w-lg bg-[#2A2B34]  border border-gray-700 rounded-lg shadow-lg overflow-hidden">
-        {/* Header */}
+      <div className="w-full max-w-lg bg-[#2A2B34] border border-gray-700 rounded-lg shadow-lg overflow-hidden">
         <div className="flex justify-between items-center p-4 border-b border-gray-700">
           <h2 className="text-xl font-bold text-white">Ajouter un Évènement</h2>
         </div>
-        {/* Body */}
         <div className="p-6">
           <div className="text-white mb-4">
             <div className="mb-2">
-              <span className="font-bold">{formatDate(props.date)}</span> à <span className="font-bold">{formatTime(props.hour)}</span>
+              <span className="font-bold">{formatDate(props.date)}</span> à{" "}
+              <span className="font-bold">{formatTime(props.hour)}</span>
             </div>
             <div className="mb-2">
               <input
+                ref={titleRef}
                 className="w-full px-3 py-2 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
                 type="text"
                 id="eventTitle"
@@ -50,6 +71,7 @@ const Popup: React.FC<PopupI> = (props) => {
             </div>
             <div>
               <input
+                ref={descriptionRef}
                 className="w-full px-3 py-2 pb-9 border border-gray-600 rounded bg-gray-700 text-white focus:outline-none focus:border-blue-500"
                 type="text"
                 id="eventDescription"
@@ -58,7 +80,6 @@ const Popup: React.FC<PopupI> = (props) => {
             </div>
           </div>
         </div>
-        {/* Footer */}
         <div className="flex justify-end p-4 border-t border-gray-700">
           <button
             className="mr-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
