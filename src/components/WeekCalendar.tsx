@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ChangeView from "./ChangeView";
 import DayBlock from "./DayBlock";
 import ChangeWeek from "./ChangeWeek";
+import HourRuler from "./HourRuler";
 
 const WeekCalendar = () => {
   const { search } = window.location;
@@ -36,11 +37,12 @@ const WeekCalendar = () => {
   const getDay = (date: Date) => {
     return date.toLocaleDateString("fr-FR", { day: "numeric" });
   };
-
-  const hours = [];
-  for (let i = 8; i <= 20; i++) {
-    hours.push(i);
-  }
+  const isToday = (date: Date) => {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+           date.getMonth() === today.getMonth() &&
+           date.getFullYear() === today.getFullYear();
+  };
 
   return (
     <div className="w-11/12 m-auto mb-4">
@@ -64,7 +66,7 @@ const WeekCalendar = () => {
               className="text-center p-2 text-white font-bold text-xl"
             >
               <div>{getWeekday(date)}</div>
-              <div className={`${date === new Date() ? 'bg-red-500 rounded-full' : ''} p-2`}>{getDay(date)}</div>
+              <div className={`${isToday(date) ? 'bg-red-500 rounded-full' : ''} p-2 mt-1`}>{getDay(date)}</div>
             </div>
           ))}
         </div>
@@ -72,11 +74,7 @@ const WeekCalendar = () => {
       <div className="grid grid-cols-7">
         {/* Heures */}
         <div className="col-span-1 grid grid-cols-1 grid-rows-12 gap-3">
-          {hours.map((hour) => (
-            <div key={hour} className="text-end pb-16 text-white">
-              {hour.toString().padStart(2, "0")}:00
-            </div>
-          ))}
+          < HourRuler />
         </div>
         {/* Carrés pour les heures */}
         <div className="col-span-6 grid grid-cols-7">

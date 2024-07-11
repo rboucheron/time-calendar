@@ -39,6 +39,20 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [event, setEvent] = useState<Event | null>(null);
 
+  const colors = [
+    "bg-blue-500",
+    "bg-green-500",
+    "bg-yellow-500",
+    "bg-sky-500",
+    "bg-lime-500",
+    "bg-indigo-500",
+    "bg-fuchsia-500",
+  ];
+
+  const getRandomColor = () => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   useEffect(() => {
     const storedEvents = localStorage.getItem("events");
     if (storedEvents) {
@@ -53,6 +67,12 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
     }
   }, [date, hour]);
 
+  const isPast = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
   const handleClick = () => {
     setIsPopupOpen(true);
   };
@@ -62,7 +82,9 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
       <div
         className={`w-full rounded-xl pb-16 transform transition-all duration-300 cursor-pointer z-10 ${
           event
-            ? "bg-blue-500 text-white"
+            ? `${getRandomColor()} text-white`
+            : isPast(date)
+            ? `bg-hash bg-opacity-50 hover:scale-110 hover:bg-opacity-100`
             : "bg-[#2A2B34] bg-opacity-50 hover:scale-110 hover:bg-opacity-100"
         }`}
         onClick={handleClick}
