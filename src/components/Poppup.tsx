@@ -5,7 +5,7 @@ interface PopupI {
   date: Date;
   hour: number;
   handleClose: (close: boolean) => void;
-  handleConfirm: (Event: Event) => void;
+  handleConfirm: (event: Event) => void;
 }
 
 const Popup: React.FC<PopupI> = (props) => {
@@ -40,9 +40,24 @@ const Popup: React.FC<PopupI> = (props) => {
         title: title,
         description: description,
       };
-      props.handleConfirm(event);
 
-      localStorage.setItem("event", JSON.stringify(event));
+      let events: Event[] = [];
+
+      const storedEvents = localStorage.getItem("events");
+      if (storedEvents) {
+        events = JSON.parse(storedEvents);
+        events.push(event);
+        localStorage.setItem("events", JSON.stringify(events));
+      } else {
+        events = [] 
+        events.push(event)
+        localStorage.setItem("events", JSON.stringify(events));
+      }
+
+
+
+
+      props.handleConfirm(event);
     }
 
     props.handleClose(false);

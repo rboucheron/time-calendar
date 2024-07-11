@@ -9,7 +9,7 @@ interface DayBlockProps {
 
 interface HourBlockProps {
   hour: number;
-  date: Date; 
+  date: Date;
   index: number;
 }
 
@@ -23,7 +23,12 @@ const DayBlock: React.FC<DayBlockProps> = ({ date, index }) => {
     <div className="text-center ml-4">
       <div className="h-full mb-0 grid grid-cols-1 grid-rows-12 gap-4">
         {hours.map((hour, hourIndex) => (
-          <HourBlock key={`${index}-${hourIndex}`} hour={hour} date={date} index={hourIndex} />
+          <HourBlock
+            key={`${index}-${hourIndex}`}
+            hour={hour}
+            date={date}
+            index={hourIndex}
+          />
         ))}
       </div>
     </div>
@@ -35,15 +40,16 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
   const [event, setEvent] = useState<Event | null>(null);
 
   useEffect(() => {
-    const storedEvent = localStorage.getItem("event");
-    if (storedEvent) {
-      const parsedEvent = JSON.parse(storedEvent);
-      const eventDate = new Date(parsedEvent.date);
-      if (
-        eventDate.toLocaleDateString() === date.toLocaleDateString() &&
-        parsedEvent.hour === hour
-      ) {
-        setEvent({ title: parsedEvent.title, description: parsedEvent.description, date: parsedEvent.date, hour: parsedEvent });
+    const storedEvents = localStorage.getItem("events");
+    if (storedEvents) {
+      const parsedEvents: Event[] = JSON.parse(storedEvents);
+      const foundEvent = parsedEvents.find(
+        (e) =>
+          new Date(e.date).toLocaleDateString() === date.toLocaleDateString() &&
+          e.hour === hour
+      );
+      if (foundEvent) {
+        setEvent(foundEvent);
       }
     }
   }, [date, hour]);
@@ -56,7 +62,9 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
     <>
       <div
         className={`w-full rounded-xl pb-16 transform transition-all duration-300 cursor-pointer z-10 ${
-          event ? 'bg-blue-500 text-white' : 'bg-[#2A2B34] bg-opacity-50 hover:scale-110 hover:bg-opacity-100'
+          event
+            ? "bg-blue-500 text-white"
+            : "bg-[#2A2B34] bg-opacity-50 hover:scale-110 hover:bg-opacity-100"
         }`}
         onClick={handleClick}
       >
@@ -67,7 +75,14 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
           </div>
         )}
       </div>
-      {isPopupOpen && <Popup date={date} hour={hour} handleConfirm={(event : Event) => setEvent(event)} handleClose={(value: boolean) => setIsPopupOpen(value)} />}
+      {isPopupOpen && (
+        <Popup
+          date={date}
+          hour={hour}
+          handleConfirm={(newEvent: Event) => setEvent(newEvent)}
+          handleClose={(value: boolean) => setIsPopupOpen(value)}
+        />
+      )}
     </>
   );
 };
