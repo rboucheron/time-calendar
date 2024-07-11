@@ -48,9 +48,8 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
           new Date(e.date).toLocaleDateString() === date.toLocaleDateString() &&
           e.hour === hour
       );
-      if (foundEvent) {
-        setEvent(foundEvent);
-      }
+
+      setEvent(foundEvent ? foundEvent : null);
     }
   }, [date, hour]);
 
@@ -80,7 +79,7 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
           date={date}
           hour={hour}
           handleConfirm={(newEvent: Event) => setEvent(newEvent)}
-          handleClose={(value: boolean) => setIsPopupOpen(value)}
+          handleClose={() => setIsPopupOpen(false)}
         />
       )}
     </>
