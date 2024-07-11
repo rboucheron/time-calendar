@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ChangeView from "./ChangeView";
 import DayBlock from "./DayBlock";
 import ChangeWeek from "./ChangeWeek";
