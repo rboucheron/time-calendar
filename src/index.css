@@ -127,19 +127,29 @@
   font-weight: 900;
   font-style: italic;
 }
+
 .bg-hash {
-    background-image: repeating-linear-gradient(
-      45deg,
+  background-image: repeating-linear-gradient(45deg,
       #2A2B34 0,
       #2A2B34 1px,
       transparent 1px,
-      transparent 10px
-    ),
-    repeating-linear-gradient(
-      -45deg,
+      transparent 10px),
+    repeating-linear-gradient(-45deg,
       #2A2B34 0,
       #2A2B34 1px,
       transparent 1px,
-      transparent 10px
-    );
-  }
+      transparent 10px);
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-bottom: 10px solid #f56565;
+  /* This is bg-red-500 */
+  position: absolute;
+  pointer-events: none;
+  transition: transform 0.1s ease;
+  transform: rotate(-45deg);
+}

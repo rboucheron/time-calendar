@@ -73,7 +73,7 @@ const WeekCalendar = () => {
       </div>
       <div className="grid grid-cols-7">
         {/* Heures */}
-        <div className="col-span-1 grid grid-cols-1 grid-rows-12 gap-3">
+        <div className="col-span-1 grid grid-cols-1 grid-rows-12 gap-3 relative">
           < HourRuler />
         </div>
         {/* Carrés pour les heures */}

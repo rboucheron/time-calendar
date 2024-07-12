@@ -8,10 +8,8 @@ interface ChangeWeekProps {
 
 const ChangeWeek: React.FC<ChangeWeekProps> = ({ ChooseDay, onChange }) => {
   const [landmarkDay, setLandmarkDay] = useState<Date>(ChooseDay);
-
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("fr-FR", {
-
       month: "long",
       year: "numeric",
     });
@@ -34,7 +32,7 @@ const ChangeWeek: React.FC<ChangeWeekProps> = ({ ChooseDay, onChange }) => {
   return (
     <div className="flex space-x-4  text-white">
       <div onClick={handleDayDecreases} className="cursor-pointer">
-        <ArrowLeft />
+        <ArrowLeft  />
       </div>
       <p>{String(formatDate(landmarkDay))}</p>
       <div onClick={handleDayIncreases} className="cursor-pointer">
