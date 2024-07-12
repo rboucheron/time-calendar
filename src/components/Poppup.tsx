@@ -14,11 +14,7 @@ const Poppup: React.FC<PoppupProps> = ({ children }) => {
   );
 };
 
-interface SectionProps {
-  children: ReactNode;
-}
-
-export const HeaderPoppup: React.FC<SectionProps> = ({ children }) => {
+export const HeaderPoppup: React.FC<PoppupProps> = ({ children }) => {
   return (
     <div className="flex justify-between items-center p-4 border-b border-gray-700">
       <h2 className="text-xl font-bold text-white">{children}</h2>
@@ -26,7 +22,7 @@ export const HeaderPoppup: React.FC<SectionProps> = ({ children }) => {
   );
 };
 
-export const BodyPoppup: React.FC<SectionProps> = ({ children }) => {
+export const BodyPoppup: React.FC<PoppupProps> = ({ children }) => {
   return (
     <div className="p-6">
       <div className="text-white mb-4">{children}</div>
@@ -34,7 +30,7 @@ export const BodyPoppup: React.FC<SectionProps> = ({ children }) => {
   );
 };
 
-export const FooterPoppup: React.FC<SectionProps> = ({ children }) => {
+export const FooterPoppup: React.FC<PoppupProps> = ({ children }) => {
   return (
     <div className="flex justify-end p-4 border-t border-gray-700">{children}</div>
   );

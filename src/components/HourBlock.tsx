@@ -43,13 +43,20 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
       setEvent(foundEvent ? foundEvent : null);
     }
   }, [date, hour]);
+
   useEffect(() => {
     setIsOptionOpen(false);
   }, [event]);
+
   const isPast = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date < today;
+  };
+
+  const handleUpdate = (value: boolean) => {
+    setIsOptionOpen(false);
+    setIsUpdatePoppupOpen(value);
   };
 
   return (
@@ -63,7 +70,7 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
             : "bg-[#2A2B34] bg-opacity-40  hover:bg-opacity-100"
         }`}
         onClick={
-          event ? () => setIsOptionOpen(true) : () => setIsPopupOpen(true)
+          event ? () => setIsOptionOpen(!isOptionOpen) : () => setIsPopupOpen(true)
         }
       >
         {isOptionOpen && (
@@ -72,7 +79,7 @@ const HourBlock: React.FC<HourBlockProps> = ({ hour, date }) => {
             hour={hour}
             handleConfirm={(event: Event | null) => setEvent(event)}
             handleClose={(value: boolean) => setIsOptionOpen(value)}
-            handleUpdate={(value: boolean) => setIsOptionOpen(value)}
+            handleUpdate={handleUpdate}
           />
         )}
         {event && (
