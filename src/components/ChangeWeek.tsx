@@ -34,7 +34,7 @@ const ChangeWeek: React.FC<ChangeWeekProps> = ({ ChooseDay, onChange }) => {
       <div onClick={handleDayDecreases} className="cursor-pointer">
         <ArrowLeft  />
       </div>
-      <p>{String(formatDate(landmarkDay))}</p>
+      <p className="cursor-default select-none">{String(formatDate(landmarkDay))}</p>
       <div onClick={handleDayIncreases} className="cursor-pointer">
         <ArrowRight />
       </div>
