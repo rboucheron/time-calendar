@@ -26,11 +26,12 @@ function HourRuler() {
   return (
     <>
       <div
-        className="triangle"
+        className={`triangle ${new Date().getHours() > 20 || new Date().getHours() < 8 ? 'hidden' : '' }`}
         style={{
           top: `${cursorPosition}% `,
           right: 55,
         }}
+
       ></div>
       {hours.map((hour) => (
         <div key={hour} className="text-end pb-16 text-white">
